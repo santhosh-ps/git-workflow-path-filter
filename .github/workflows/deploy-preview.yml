@@ -1,6 +1,7 @@
-name: DeployStaging
+name: DeployPreview
 on:
-  push:
+  pull_request:
+    types: [opened, reopened, synchronize]
     branches:
       - main
   workflow_dispatch:
@@ -20,10 +21,14 @@ jobs:
               - 'client/**'
       - name: backend deployment
         if: steps.changes.outputs.backend == 'true'
-        run: echo 'backend deployment'
+        id: backendDeployment
+        run: |
+          echo 'backend deployment'
+          echo "::set-output name=url::https://generated-api.example.com"
       - name: client deployment
-        if: steps.changes.outputs.frontend == 'true'
-        run: echo 'frontend deployment'
+        if: steps.changes.outputs.frontend == 'true' || steps.changes.outputs.backend == 'true'
+        run: |
+          echo 'frontend deployment with url ${steps.backendDeployment.outputs.url||secrets.URL}'
 
 
 
