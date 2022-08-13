@@ -1,0 +1,32 @@
+
+name: DeployStaging
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - client
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: check for file changes
+        uses: dorny/paths-filter@v2
+        id: changes
+        with:
+          filters: |
+            backend:
+              - 'server/**'
+            frontend:
+              - 'client/**'
+      - name: client deployment
+        if: steps.filter.outputs.frontend == 'true'
+        run: echo 'frontend deployment'
+      - name: backend deployment
+        if: steps.filter.outputs.backend == 'true'
+        run: echo 'frontend deployment'
+
+
+
