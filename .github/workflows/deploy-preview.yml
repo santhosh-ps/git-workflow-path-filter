@@ -28,7 +28,7 @@ jobs:
       - name: client deployment
         if: steps.changes.outputs.frontend == 'true' || steps.changes.outputs.backend == 'true'
         run: |
-          echo 'frontend deployment with url ${steps.backendDeployment.outputs.url||secrets.URL}'
+          echo 'frontend deployment with url - '${steps.backendDeployment.outputs.url||secrets.URL}
 
 
 
