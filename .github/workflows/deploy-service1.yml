@@ -1,15 +1,21 @@
 
-name: Deploy - Staging
+name: DeployClient
 on:
   push:
     branches:
       - main
+    paths:
+      - server
+  workflow_run:
+    workflows: ['DeployServer']
+    paths:
+      - server
+    types:
+      - completed
   workflow_dispatch:
-    name: 'Deploy - BE'
-
 jobs:
   test:
-  runs-on: ubuntu-latest
+    runs-on: ubuntu-latest
     steps:
       - name: service 1
         run: echo "service 1 deployed"

@@ -1,0 +1,15 @@
+
+name: DeployServer
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - client
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: server
+        run: echo "Server deployed"
